@@ -1,30 +1,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://Dexberry1234:Dexberry1234@dexberrywhitelist.8fzh6.mongodb.net/dexberry',{useNewUrlParser:true,useUnifiedTopology:true}).catch((e)=>{
+mongoose.connect('mongodb+srv://rasedul20:rasedul20@telegramproject.gwtce.mongodb.net/groupHandlerBot',{useNewUrlParser:true,useUnifiedTopology:true}).catch((e)=>{
         console.log(e)
 }).then((d)=>console.log('Database connected')).catch((e)=>console.log(e))
 
 
 const newSchema = new mongoose.Schema({
+    
     userId: {
+        type: Number
+    },
+    userName: {
         type: String
     },
     name: {
         type: String
     },
-    input_name: {
-        type: String
-    },
-    email: {
-        type: String
-    },
-    wallet: {
-        type: String
-    },
-    BNB:{
-        type: String
+    joinDate: {
+        type: Date,
+        default: Date.now
     }
+
+
 },{versionKey: false})
 
 const User = mongoose.model('user',newSchema)
@@ -39,10 +37,9 @@ app.get("/",async (req,res)=>{
             htdata = htdata+`
             <tr>
                 <td>${data.userId}<td/>
-                <td>${data.input_name}<td/>
-                <td>${data.email}<td/>
-                <td>${data.wallet}<td/>
-                <td>${data.BNB}<td/>
+                <td>${data.userName}<td/>
+                <td>${data.name}<td/>
+                <td>${data.joinDate}<td/>
             </tr>`
         })
     }
@@ -90,10 +87,9 @@ app.get("/",async (req,res)=>{
     <table id="customers">
     <tr>
     <th>User Id<th/>
+    <th>User Name<th/>
     <th>Name<th/>
-    <th>Email<th/>
-    <th>Wallet<th/>
-    <th>BNB<th/>
+    <th>Join Date<th/>
     </tr>
 ${htdata}
     </table>
